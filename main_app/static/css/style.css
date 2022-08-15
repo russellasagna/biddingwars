@@ -1,0 +1,14 @@
+body {
+  background-color: rgb(159, 29, 29);
+}
+.col-sm-4 {
+  background-color: black;
+}
+.btn-primary {
+  background-color: green;
+}
+.card {
+  background-color: rgb(174, 168, 168);
+  border-radius: 0.5rem;
+  margin: 0.5rem 0 2rem;
+}
