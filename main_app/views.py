@@ -1,11 +1,24 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Bid
 
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
+
+class SellCreate(CreateView, LoginRequiredMixin):
+  model = Bid
+  fields = '__all__'
+  success_url = '/'
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    # Let the CreateView superclass do its usual job
+    return super().form_valid(form)
 
 def signup(request):
   error_message = ''
