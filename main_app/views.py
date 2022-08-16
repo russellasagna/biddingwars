@@ -3,17 +3,17 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Bid
+from .models import Post
 
 # Create your views here.
 
 def home(request):
     return render(request, 'home.html')
 
-class SellCreate(CreateView, LoginRequiredMixin):
-  model = Bid
+class BidCreate(CreateView, LoginRequiredMixin):
+  model = Post
   fields = '__all__'
-  success_url = '/'
+  # success_url = '/'
 
   def form_valid(self, form):
     form.instance.user = self.request.user
