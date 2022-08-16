@@ -12,14 +12,21 @@ from .models import Post
 def home(request):
     return render(request, 'home.html')
 
+def user_bids(request):
+    my_bids = Post.objects.filter(user=request.user)
+    return render(request, 'user_stuff/user_bids.html', {'bids': my_bids})
 
-class BidList(ListView):
-  model = Post
-  context_object_name = 'post_list'
+def bid_list(request):
+  all_bids = Post.objects.exclude(user=request.user)
+  return render(request, 'main_app/post_list.html', {'bids': all_bids})
+
+def bid_detail(request, sell_id):
+  post = Post.objects.get(id=sell_id)
+  return render(request, 'main_app/post_detail.html', { 'bid': post })
 
 class BidCreate(CreateView, LoginRequiredMixin):
   model = Post
-  fields = ['title','description', 'price', 'type', 'time', 'ship']
+  fields = ['title','description', 'price', 'type', 'ship']
   # success_url = '/'
 
   def form_valid(self, form):

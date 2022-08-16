@@ -15,7 +15,6 @@ class Post(models.Model):
         choices=OPTIONS,
         default=[0][0]
     )
-    time = models.DateField()
     ship = models.BooleanField('Ship Item')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,7 +24,7 @@ class Post(models.Model):
         return f'{self.name}'
     
     def get_absolute_url(self):
-        return reverse('home', kwargs={'sell_id': self.id})
+        return reverse('bid_detail', kwargs={'sell_id': self.id})
 
 
 # class Bid(models.Model):
