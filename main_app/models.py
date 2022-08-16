@@ -9,12 +9,13 @@ OPTIONS = (('I', 'Item'), ('J', 'Job'))
 class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
+    price = models.DecimalField(max_digits=100, decimal_places=2)
     type = models.CharField(
         max_length=1,
         choices=OPTIONS,
         default=[0][0]
     )
-    time = models.DateTimeField()
+    time = models.DateField()
     ship = models.BooleanField('Ship Item')
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,7 +25,7 @@ class Post(models.Model):
         return f'{self.name}'
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'sell_id': self.id})
+        return reverse('home', kwargs={'sell_id': self.id})
 
 
 # class Bid(models.Model):

@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Post
 
 # Create your views here.
@@ -10,9 +12,14 @@ from .models import Post
 def home(request):
     return render(request, 'home.html')
 
+
+class BidList(ListView):
+  model = Post
+  context_object_name = 'post_list'
+
 class BidCreate(CreateView, LoginRequiredMixin):
   model = Post
-  fields = '__all__'
+  fields = ['title','description', 'price', 'type', 'time', 'ship']
   # success_url = '/'
 
   def form_valid(self, form):
