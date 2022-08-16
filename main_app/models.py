@@ -17,7 +17,7 @@ class Post(models.Model):
     time = models.DateTimeField()
     ship = models.BooleanField('Ship Item')
 
-    user = models.ForeignKey(User, on_delete=models.cascade)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -27,10 +27,10 @@ class Post(models.Model):
         return reverse('detail', kwargs={'sell_id': self.id})
 
 
-class Bid(models.Model):
-    post = models.ForeignKey(Post)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+# class Bid(models.Model):
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
-    def __str__(self):
-        return f'{self.name}'
+#     def __str__(self):
+#         return f'{self.name}'
