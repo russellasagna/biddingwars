@@ -1,14 +1,17 @@
 body {
-  background-color: rgb(159, 29, 29);
+  background-color: rgb(249, 246, 246);
 }
 .col-sm-4 {
-  background-color: black;
+  background-color: rgb(64, 60, 60);
 }
 .btn-primary {
-  background-color: green;
+  background-color: rgb(27, 131, 27);
 }
 .card {
   background-color: rgb(174, 168, 168);
   border-radius: 0.5rem;
   margin: 0.5rem 0 2rem;
+}
+.titl {
+  text-align: center;
 }
