@@ -4,13 +4,31 @@
 <h1>{{post.title}}</h1>
 <h1>{{post.description}}</h1>
 <h1>{{post.price}}</h1>
-<div>
-    <form action="{%url 'new_buyer' post.id%}"method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="btn" value="Add New Bid">
-    </form>
-</div>
+<table>
+    <thead>
+        <tr>
+          <th>User</th>
+          <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for buyer in buyer_data %}
+        <tr>
+            <td>{{buyer.name}}</td>
+            <td>{{buyer.amount}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<form action="{%url 'new_buyer' post.id%}"method="POST">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit!" class="btn">
+</form>
 
 
 
