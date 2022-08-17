@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -10,7 +10,10 @@ from .models import Post
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    all_bids = Post.objects.filter(user=request.user)
+    return render(request, 'home.html', {
+      'bids': all_bids,
+    })
 
 def user_bids(request):
     my_bids = Post.objects.filter(user=request.user)
@@ -33,6 +36,16 @@ class BidCreate(CreateView, LoginRequiredMixin):
     form.instance.user = self.request.user
     # Let the CreateView superclass do its usual job
     return super().form_valid(form)
+
+class BidUpdate(UpdateView, LoginRequiredMixin):
+  model = Post
+  fields = ['title','description', 'price', 'type', 'ship']
+  # success_url = '/'
+
+class BidDelete(DeleteView, LoginRequiredMixin):
+  model = Post
+  success_url = '/bids/'
+
 
 def signup(request):
   error_message = ''
