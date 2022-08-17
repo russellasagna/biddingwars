@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load qr_code %}
 
 <h1>My Bids</h1>
 
@@ -19,10 +20,40 @@
             <a href="{% url 'post_update' post.id %}">Edit</a>
             <a href="{% url 'post_delete' post.id %}">Delete</a>
           </div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            QR Code
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Scan QR Code</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  {% qr_from_text "https://www.google.com" size=40 border=3 %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 {% endfor %}
+<script defer>
+  const myModal = document.getElementById('myModal')
+  const myInput = document.getElementById('myInput')
+  
+  myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus()
+  })
+</script>
 
 {% endblock %}
