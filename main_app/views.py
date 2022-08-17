@@ -10,24 +10,24 @@ from .models import Post
 # Create your views here.
 
 def home(request):
-    all_bids = Post.objects.filter(user=request.user)
+    # all_bids = Post.object.all()
     return render(request, 'home.html', {
-      'bids': all_bids,
+      # 'bids': all_bids,
     })
 
 def user_bids(request):
     my_bids = Post.objects.filter(user=request.user)
-    return render(request, 'user_stuff/user_bids.html', {'bids': my_bids})
+    return render(request, 'user_stuff/user_bids.html', {'posts': my_bids})
 
-def bid_list(request):
+def post_list(request):
   all_bids = Post.objects.exclude(user=request.user)
-  return render(request, 'main_app/post_list.html', {'bids': all_bids})
+  return render(request, 'main_app/post_list.html', {'posts': all_bids})
 
-def bid_detail(request, sell_id):
+def post_detail(request, sell_id):
   post = Post.objects.get(id=sell_id)
-  return render(request, 'main_app/post_detail.html', { 'bid': post })
+  return render(request, 'main_app/post_detail.html', { 'post': post })
 
-class BidCreate(CreateView, LoginRequiredMixin):
+class PostCreate(CreateView, LoginRequiredMixin):
   model = Post
   fields = ['title','description', 'price', 'type', 'ship']
   # success_url = '/'
@@ -37,15 +37,21 @@ class BidCreate(CreateView, LoginRequiredMixin):
     # Let the CreateView superclass do its usual job
     return super().form_valid(form)
 
-class BidUpdate(UpdateView, LoginRequiredMixin):
+class PostUpdate(UpdateView, LoginRequiredMixin):
   model = Post
   fields = ['title','description', 'price', 'type', 'ship']
   # success_url = '/'
 
-class BidDelete(DeleteView, LoginRequiredMixin):
+class PostDelete(DeleteView, LoginRequiredMixin):
   model = Post
   success_url = '/bids/'
 
+# def add_buyer(request, sell_id)
+
+# class BuyerCreate()
+# create new buyer 
+
+# if not owner of listing
 
 def signup(request):
   error_message = ''

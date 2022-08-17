@@ -3,7 +3,7 @@
 
 <h1>My Bids</h1>
 
-{% for post in bids %}
+{% for post in posts %}
 <div class="row">
     <!-- Use for-loop for <div class="col-sm-4"> -->
     <div class="col-sm-4">
@@ -16,8 +16,8 @@
           <p class="card-text">Retail: $8</p>
           <p class="card-text">Sold By: BiddingWars</p>
           <div class="card-action">
-            <a href="{% url 'bid_update' post.id %}">Edit</a>
-            <a href="{% url 'bid_delete' post.id %}">Delete</a>
+            <a href="{% url 'post_update' post.id %}">Edit</a>
+            <a href="{% url 'post_delete' post.id %}">Delete</a>
           </div>
         </div>
       </div>
