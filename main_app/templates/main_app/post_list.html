@@ -1,14 +1,11 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>All Bids</h1>
 
 {% for post in posts %}
-  <h1>{{ post.title }}</h1>
-  <h1>{{ post.description }}</h1>
-  <h1>{{ post.price }}</h1>
-  <h1>{{ post.type }}</h1>
-  <h1>{{ post.ship }}</h1>
-{% endfor %}
-
-{% endblock %}
+<h1>{{ post.title }}</h1>
+<h1>{{ post.description }}</h1>
+<h1>{{ post.price }}</h1>
+<h1>{{ post.type }}</h1>
+<h1>{{ post.ship }}</h1>
+{% endfor %} {% endblock %}

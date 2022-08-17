@@ -4,8 +4,8 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-from .models import Post
+from .forms import BidForm
+from .models import Post, Bid
 
 # Create your views here.
 
@@ -21,7 +21,9 @@ def user_bids(request):
 
 def post_list(request):
   all_bids = Post.objects.exclude(user=request.user)
-  return render(request, 'main_app/post_list.html', {'posts': all_bids})
+  buyer_form = BidForm()
+  return render(request, 'main_app/post_list.html', {'posts': all_bids, 'form': buyer_form})
+  
 
 def post_detail(request, sell_id):
   post = Post.objects.get(id=sell_id)
@@ -45,6 +47,17 @@ class PostUpdate(UpdateView, LoginRequiredMixin):
 class PostDelete(DeleteView, LoginRequiredMixin):
   model = Post
   success_url = '/bids/'
+
+
+def add_bid(request, sell_id):
+  form = BidForm(request.POST)
+  if form.is_valid():
+    new_bid = form.save(commit=False)
+    new_bid.post_id = sell_id
+    new_bid.user_id = request.user.id
+    new_bid.save()
+  
+  return redirect('post_detail', sell_id=sell_id)
 
 # def add_buyer(request, sell_id)
 

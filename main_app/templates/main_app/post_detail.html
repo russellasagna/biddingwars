@@ -4,6 +4,14 @@
 <h1>{{post.title}}</h1>
 <h1>{{post.description}}</h1>
 <h1>{{post.price}}</h1>
+<div>
+    <form action="{%url 'new_buyer' post.id%}"method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn" value="Add New Bid">
+    </form>
+</div>
+
 
 
 {% endblock %}
