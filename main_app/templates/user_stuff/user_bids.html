@@ -15,6 +15,10 @@
           <p class="card-text"></p>
           <p class="card-text">Retail: $8</p>
           <p class="card-text">Sold By: BiddingWars</p>
+          <div class="card-action">
+            <a href="{% url 'bid_update' post.id %}">Edit</a>
+            <a href="{% url 'bid_delete' post.id %}">Delete</a>
+          </div>
         </div>
       </div>
     </div>
