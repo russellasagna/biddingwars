@@ -21,6 +21,7 @@ def user_bids(request):
 
 def post_list(request):
   all_bids = Post.objects.exclude(user=request.user)
+  print(all_bids)
   return render(request, 'main_app/post_list.html', {'posts': all_bids})
 
 def post_detail(request, sell_id):
