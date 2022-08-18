@@ -9,6 +9,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=100, decimal_places=2)
+    qr_code = models.TextField()
     type = models.CharField(
         max_length=1,
         choices=OPTIONS,
@@ -36,3 +37,7 @@ class Bid(models.Model):
 
     class Meta: 
         ordering = ['-amount']
+
+class Crypto(models.Model):
+    wallet_id = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

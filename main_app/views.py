@@ -1,11 +1,13 @@
+from pickle import FALSE
+from urllib import request
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import BidForm
-from .models import Post, Bid
+from .forms import BidForm, SignUp, CryptoForm
+from .models import Post, Bid, Crypto
 from django.core.exceptions import ValidationError
 
 # Create your views here.
@@ -38,6 +40,7 @@ class PostCreate(CreateView, LoginRequiredMixin):
 
   def form_valid(self, form):
     form.instance.user = self.request.user
+    form.instance.qr_code = Crypto.objects.get(user=self.request.user).wallet_id
     # Let the CreateView superclass do its usual job
     return super().form_valid(form)
 
@@ -87,16 +90,24 @@ def signup(request):
   if request.method == 'POST':
     # This is how to create a 'user' form object
     # that includes the data from the browser
-    form = UserCreationForm(request.POST)
+    form = SignUp(request.POST)
+    crypto_form = CryptoForm()
+      
+      
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
+      new_wallet = crypto_form.save(commit=False)
+      new_wallet.wallet_id = request.POST['crypto_wallet']
+      new_wallet.user_id = user.id
+      new_wallet.save()
+      
       # This is how we log a user in via code
       login(request, user)
       return redirect('home')
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
-  form = UserCreationForm()
+  form = SignUp()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
