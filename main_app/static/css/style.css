@@ -1,6 +1,7 @@
 body {
   background-color: rgb(249, 246, 246);
 }
+
 .col-sm-4 {
   background-color: rgb(64, 60, 60);
 }
@@ -8,6 +9,7 @@ body {
   background-color: rgb(27, 131, 27);
 }
 .card {
+  width: 400px;
   background-color: rgb(174, 168, 168);
   border-radius: 0.5rem;
   margin: 0.5rem 0 2rem;
