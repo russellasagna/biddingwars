@@ -12,4 +12,5 @@ urlpatterns = [
     path('bids/<int:sell_id>/', views.post_detail, name='post_detail'),
     path('accounts/signup/', views.signup, name='signup'),
     path('bids/<int:sell_id>/new_buyer/', views.add_bid, name='new_buyer'),
+    path('bids/<int:post_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
