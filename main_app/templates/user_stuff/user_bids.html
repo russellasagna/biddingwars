@@ -8,8 +8,12 @@
 <div class="row">
     <!-- Use for-loop for <div class="col-sm-4"> -->
     <div class="col-sm-4">
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Bid Item" />
+        <div class="card">
+        {% for photo in post.photo_set.all %}
+          <img class="card-img-top" src="{{ photo.url }}" alt="Bid Item">
+        {% empty %}
+          <div class="card-img-top">No Photos Uploaded</div>
+        {% endfor %}
         <div class="card-body">
           <h5 class="card-title">{{post.title}}</h5>
           <a href="#" class="btn btn-primary"></a>

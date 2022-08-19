@@ -1,3 +1,6 @@
+import os
+import uuid
+import boto3
 from pickle import FALSE
 from urllib import request
 from django.shortcuts import render, redirect
@@ -7,8 +10,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import BidForm, SignUp, CryptoForm
-from .models import Post, Bid, Crypto
+from .models import Post, Bid, Crypto, Photo
 from django.core.exceptions import ValidationError
+
+def some_function(request):
+    secret_key = os.environ['SECRET_KEY']
 
 # Create your views here.
 
@@ -111,3 +117,23 @@ def signup(request):
   form = SignUp()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+def add_photo(request, post_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(photo_file, bucket, key)
+            # build the full url string
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            # we can assign to post_id or post (if you have a post object)
+            Photo.objects.create(url=url, post_id=post_id)
+        except Exception as e:
+            print('An error occurred uploading file to S3')
+            print(e)
+    return redirect('detail', post_id=post_id)
