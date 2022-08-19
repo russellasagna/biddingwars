@@ -9,6 +9,7 @@
 <div class="row">
     <!-- Use for-loop for <div class="col-sm-4"> -->
     <div class="col-sm-4">
+    <a class='btn-primary-outline' href="{% url 'post_detail' post.id %}">
       <div class="card">
         <img class="card-img-top" src="..." alt="Bid Item" />
         <div class="card-body">
@@ -17,6 +18,7 @@
           <p class="card-text"></p>
           <p class="card-text">Retail: $8</p>
           <p class="card-text">Sold By: BiddingWars</p>
+    </a>
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             QR Code
