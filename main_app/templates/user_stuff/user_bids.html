@@ -8,6 +8,7 @@
 <div class="row">
     <!-- Use for-loop for <div class="col-sm-4"> -->
     <div class="col-sm-4">
+      <a class='btn-primary-outline' href="{% url 'post_detail' post.id %}">
         <div class="card">
         {% for photo in post.photo_set.all %}
           <img class="card-img-top" src="{{ photo.url }}" alt="Bid Item">
@@ -28,6 +29,7 @@
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             QR Code
           </button>
+      </a> 
           
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
