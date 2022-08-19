@@ -10,6 +10,9 @@
 <h5>Russel Laganzon, Alexander Haines, Andrew Bui</h5>
 
 <a href="https://www.linkedin.com/in/alexander-haines-9a9956238/" target="_blank">
+<a href="https://www.linkedin.com/in/russel-laganzon/" target="_blank">
+<a href="https://www.linkedin.com/in/andrew-quang-bui/" target="_blank">
+
 <img
   src="https://img.shields.io/badge/-@username-blue?style=flat&logo=Linkedin&logoColor=white"
 />
