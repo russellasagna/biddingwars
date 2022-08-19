@@ -109,7 +109,7 @@ You can bid on all the best items and try to get them for a low price. You can b
 
 <h3>:link: Links</h3>
 <details>
-  <summary>Deployed Link (Heroku)</summary> 
+  <summary>Deployed Link (Heroku)</summary>
   <a href="https://biddingwars.herokuapp.com"></a>
 </details>
 
