@@ -1,5 +1,6 @@
 body {
   background-color: rgb(249, 246, 246);
+  color: white;
 }
 
 .col-sm-4 {
@@ -16,4 +17,19 @@ body {
 }
 .titl {
   text-align: center;
+}
+
+main {
+  background-image: url("https://wallpapercave.com/wp/wp4678534.jpg");
+  background-size: cover;
+  height: 100vh;
+  padding: 2vh;
+}
+
+h1, h3 {
+  padding: 20px;
+}
+
+input[type="submit"] {
+  color: white;
 }
