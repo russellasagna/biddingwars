@@ -6,7 +6,6 @@ urlpatterns = [
     path('bids/userbids', views.user_bids, name='user_bids'),
     path('bids/', views.post_list, name='post_list'),
     path('bids/create/', views.PostCreate.as_view(), name='post_create'),
-    # path('bids/create/buyer/', views.add_buyer, name='new_buyer'),
     path('bids/<int:pk>/update/', views.PostUpdate.as_view(), name='post_update'),
     path('bids/<int:pk>/delete/', views.PostDelete.as_view(), name='post_delete'),
     path('bids/<int:post_id>/', views.post_detail, name='post_detail'),

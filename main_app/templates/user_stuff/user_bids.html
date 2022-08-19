@@ -4,65 +4,67 @@
 
 <h1><b>{{ user.username }}'s</b> Bids</h1>
 
-{% for post in posts %}
-<div class="row">
-    <!-- Use for-loop for <div class="col-sm-4"> -->
-    <div class="col-sm-4">
-      <div class="card">
-        <a class='btn-primary-outline' href="{% url 'post_detail' post.id %}">
-        {% for photo in post.photo_set.all %}
-          <img class="card-img-top" src="{{ photo.url }}" alt="Bid Item">
-        {% empty %}
-        <div class="card-img-top">No Photos Uploaded</div>
-        {% endfor %}
-        </a> 
-        <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" alt="Bid Photo" class="card-panel">
-          {% csrf_token %}
-          <input type="file" name="photo-file">
-          <br><br>
-          <input type="submit" class="btn" value="Upload Photo">
-        </form>
-        <div class="card-body">
-          <h5 class="card-title">{{post.title}}</h5>
-          <hr>
-          <p class="card-text">Description: {{ post.description }}</p>
-          <p class="card-text">Price: ${{ post.price }}</p>
-          <p class="card-text">Sold By: {{ user.username }}</p>
-          <div class="card-action">
-            <a href="{% url 'post_update' post.id %}">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="{% url 'post_delete' post.id %}">Delete</a>
-          </div>
-          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            QR Code
-          </button>
-          
-          <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Scan QR Code</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  {% qr_from_text "https://www.google.com" size=40 border=3 %}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
+<div class="card-group">
+
+  {% for post in posts %}
+  <div class="card">
+    <a class='btn-primary-outline' href="{% url 'post_detail' post.id %}">
+      {% for photo in post.photo_set.all %}
+      <img class="card-img-top" src="{{ photo.url }}" alt="Bid Item">
+      {% empty %}
+      <div class="card-img-top">No Photo Available!</div>
+      {% endfor %}
+    </a>
+    {% if not post.photo_set.all %}
+    <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" alt="Bid Photo"
+      class="card-panel">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <br><br>
+      <input type="submit" class="btn" value="Upload Photo">
+    </form>
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{post.title}}</h5>
+      <hr>
+      <p class="card-text">{{ post.description }}</p>
+      <p class="card-text">${{ post.price }}</p>
+      <p class="card-text">Sold By: {{ user.username }}</p>
+      <div class="card-action">
+        <a href="{% url 'post_update' post.id %}">Edit</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+        <a href="{% url 'post_delete' post.id %}">Delete</a>
+      </div>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        QR Code
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Scan QR Code</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {% qr_from_text "https://www.google.com" size=40 border=3 %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-{% endfor %}
+  {% endfor %}
+</div>
+
 <script defer>
   const myModal = document.getElementById('myModal')
   const myInput = document.getElementById('myInput')
-  
+
   myModal.addEventListener('shown.bs.modal', () => {
     myInput.focus()
   })

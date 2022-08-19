@@ -1,37 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% for photo in post.photo_set.all %}
+
+<div class="horizontal">
+    {% for photo in post.photo_set.all %}
     <img class="responsive-img card-panel" src="{{photo.url}}">
-{% empty %}
-    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
-{% endfor %}
+    {% empty %}
+    <div class="card-panel teal-text center-align">
+        <h6>No Photo Available!</h6>
+    </div>
+    {% endfor %}
 
-<table class="table-dark">
-    <thead>
-        <tr>
-            <th scope="row">Bids:</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for buyer in buyer_data %}
-        <tr>
-            <td>{{buyer.name}}</td>
-            <td>{{buyer.amount}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <h2>{{post.title}}</h2>
+    <p>{{post.description}}</p>
+    <p>Original Price: ${{post.price}}</p>
 
-
-<form action="{%url 'new_buyer' post.id%}"method="POST">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
+    <table class="details">
+        <thead>
+            <tr>
+                <th scope="row">Bids:</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for buyer in buyer_data %}
+            <tr>
+                <td>{{buyer.name}}</td>
+                <td>{{buyer.amount}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    <input type="submit" value="Submit!" class="btn">
-</form>
+</div>
 
 
+    <form action="{%url 'new_buyer' post.id%}" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit!" class="btn">
+    </form>
 
 {% endblock %}

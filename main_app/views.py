@@ -16,13 +16,8 @@ from django.core.exceptions import ValidationError
 def some_function(request):
     secret_key = os.environ['SECRET_KEY']
 
-# Create your views here.
-
 def home(request):
-    # all_bids = Post.object.all()
-    return render(request, 'home.html', {
-      # 'bids': all_bids,
-    })
+    return render(request, 'home.html', {})
 
 def user_bids(request):
     my_bids = Post.objects.filter(user=request.user)
@@ -42,22 +37,19 @@ def post_detail(request, post_id):
 class PostCreate(CreateView, LoginRequiredMixin):
   model = Post
   fields = ['title','description', 'price', 'type', 'ship']
-  # success_url = '/'
 
   def form_valid(self, form):
     form.instance.user = self.request.user
     form.instance.qr_code = Crypto.objects.get(user=self.request.user).wallet_id
-    # Let the CreateView superclass do its usual job
     return super().form_valid(form)
 
 class PostUpdate(UpdateView, LoginRequiredMixin):
   model = Post
   fields = ['title','description', 'price', 'type', 'ship']
-  # success_url = '/'
 
 class PostDelete(DeleteView, LoginRequiredMixin):
   model = Post
-  success_url = '/bids/'
+  success_url = '/bids/userbids'
 
 
 def add_bid(request, post_id):
@@ -85,44 +77,34 @@ def add_bid(request, post_id):
 def signup(request):
   error_message = ''
   if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
     form = SignUp(request.POST)
     crypto_form = CryptoForm()
       
       
     if form.is_valid():
-      # This will add the user to the database
       user = form.save()
       new_wallet = crypto_form.save(commit=False)
       new_wallet.wallet_id = request.POST['crypto_wallet']
       new_wallet.user_id = user.id
       new_wallet.save()
       
-      # This is how we log a user in via code
       login(request, user)
       return redirect('home')
     else:
       error_message = 'Invalid sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
   form = SignUp()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
 def add_photo(request, post_id):
-    # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
         s3 = boto3.client('s3')
-        # need a unique "key" for S3 / needs image file extension too
         key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        # just in case something goes wrong
         try:
             bucket = os.environ['S3_BUCKET']
             s3.upload_fileobj(photo_file, bucket, key)
-            # build the full url string
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            # we can assign to post_id or post (if you have a post object)
             Photo.objects.create(url=url, post_id=post_id)
         except Exception as e:
             print('An error occurred uploading file to S3')
