@@ -10,7 +10,7 @@ main {
   height: auto;
   padding: 2vh;
   text-shadow: -0.5vh 0.25vh 0.2em black, -0.5vh 0vh 0.1em black;
-  font-size: 2vh;
+  font-size: 20px;
 }
 
 a {
@@ -23,11 +23,11 @@ h1, h3, h4 {
 }
 
 h1 {
-  font-size: 4vh;
+  font-size: 40px;
 }
 
 h3 {
-  font-size: 2.5vh;
+  font-size: 20px;
 }
 
 h4 + form {
@@ -37,6 +37,10 @@ h4 + form {
 input[type="submit"] {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
+}
+
+table > thead > tr {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* footer {
