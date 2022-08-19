@@ -33,7 +33,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  {% qr_from_text post.qr_code size=40 border=3 %}
+                  {% qr_from_data post.qr_code size="M" %}
                 </div>      
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
