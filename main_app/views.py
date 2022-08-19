@@ -33,10 +33,10 @@ def post_list(request):
   return render(request, 'main_app/post_list.html', {'posts': all_bids})
   
 
-def post_detail(request, sell_id):
-  post = Post.objects.get(id=sell_id)
+def post_detail(request, post_id):
+  post = Post.objects.get(id=post_id)
   buyer_form = BidForm()
-  buyer_data = Post.objects.get(id=sell_id).bid_set.all()
+  buyer_data = Post.objects.get(id=post_id).bid_set.all()
   return render(request, 'main_app/post_detail.html', { 'post': post ,'form': buyer_form, 'buyer_data': buyer_data})
 
 class PostCreate(CreateView, LoginRequiredMixin):
@@ -60,36 +60,27 @@ class PostDelete(DeleteView, LoginRequiredMixin):
   success_url = '/bids/'
 
 
-def add_bid(request, sell_id):
+def add_bid(request, post_id):
   form = BidForm(request.POST)
-  post = Post.objects.get(id=sell_id)
+  post = Post.objects.get(id=post_id)
   buyer_data = post.bid_set.all()
   user_pay = float(request.POST['amount'])
   if(buyer_data):
     last_buyer = buyer_data.latest('amount')
     if(user_pay <= last_buyer.amount or user_pay < post.price):
-      return redirect('post_detail', sell_id=sell_id)
+      return redirect('post_detail', post_id=post_id)
   elif (user_pay <= post.price):
-    return redirect('post_detail', sell_id=sell_id)
+    return redirect('post_detail', post_id=post_id)
 
 
   if form.is_valid():
     new_bid = form.save(commit=False)
     new_bid.name = request.user
-    new_bid.post_id = sell_id
+    new_bid.post_id = post_id
     new_bid.user_id = request.user.id
     new_bid.save()
     
-  return redirect('post_detail', sell_id=sell_id)
-  
-  
-
-# def add_buyer(request, sell_id)
-
-# class BuyerCreate()
-# create new buyer 
-
-# if not owner of listing
+  return redirect('post_detail', post_id=post_id)
 
 def signup(request):
   error_message = ''
@@ -136,4 +127,4 @@ def add_photo(request, post_id):
         except Exception as e:
             print('An error occurred uploading file to S3')
             print(e)
-    return redirect('detail', post_id=post_id)
+    return redirect('post_detail', post_id=post_id)
