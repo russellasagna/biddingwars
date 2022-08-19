@@ -87,18 +87,19 @@ Welcome to Bidding Wars were you can bid on all the best items and try to get th
 <h3>:link: Links</h3>
 <details>
   <summary>Deployed Link (Heroku)</summary>
-  <a href="https://biddingwars.herokuapp.com"></a>
+  <a href="https://biddingwars.herokuapp.com">Deployed Link (Heroku)</a>
 </details>
 
 <details>
   <summary>Trello Board</summary>
-  <a href="https://trello.com/b/tQjXhAb2/bidding-wars">https://trello.com/b/tQjXhAb2/bidding-wars</a>
+  <a href="https://trello.com/b/tQjXhAb2/bidding-wars">Trello</a>
 </details>
 
 <details>
   <summary>Pitch Deck</summary>
-  <a href="https://docs.google.com/presentation/d/1W7sctJsqlTuLoDsJuklFTEo6R7LzKr0Gk29IPp0CqIU/edit?usp=sharing"></a>
+  <a href="https://docs.google.com/presentation/d/1W7sctJsqlTuLoDsJuklFTEo6R7LzKr0Gk29IPp0CqIU/edit?usp=sharing">Pitch Deck</a>
 </details>
+
 ## :fast_forward: Next Steps
 
 ### Upcoming Features
