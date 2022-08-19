@@ -2,7 +2,7 @@
 
 <div align="center">
 <h1>
-:mountain: :school: Biding Wars :mountain:
+:mountain: :school: Bidding Wars :mountain:
 </h1>
 
 <h3>https://biddingwars.herokuapp.com</h3>

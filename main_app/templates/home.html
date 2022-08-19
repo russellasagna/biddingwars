@@ -1,10 +1,11 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1 id="homepage">Welcome to Bidding Wars!</h1>
 {% if user.is_authenticated %}
-  <h3 id="homepage">Start making bids!</h3>
-{% else %}
-  <h3 id="homepage">Sign in to get started.</h3>
+  <h1>Welcome, <b>{{ user.username }}!</b></h1>
+  <h3>Start making bids!</h3>
+  {% else %}
+  <h1>Welcome!</h1>
+  <h3>Sign in to get started.</h3>
 {% endif %}
 
 {% endblock %}
