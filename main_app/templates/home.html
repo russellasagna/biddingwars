@@ -1,6 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 
 <h1 id="homepage">Welcome to Bidding Wars!</h1>
-<h3 id="homepage">Sign in to get started.</h3>
+{% if user.is_authenticated %}
+  <h3 id="homepage">Start making bids!</h3>
+{% else %}
+  <h3 id="homepage">Sign in to get started.</h3>
+{% endif %}
 
 {% endblock %}

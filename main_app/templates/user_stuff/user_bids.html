@@ -15,6 +15,12 @@
         {% empty %}
           <div class="card-img-top">No Photos Uploaded</div>
         {% endfor %}
+        <form action="{% url 'add_photo' post.id %}" enctype="multipart/form-data" method="POST" alt="Bid Photo" class="card-panel">
+          {% csrf_token %}
+          <input type="file" name="photo-file">
+          <br><br>
+          <input type="submit" class="btn" value="Upload Photo">
+        </form>
         <div class="card-body">
           <h5 class="card-title">{{post.title}}</h5>
           <a href="#" class="btn btn-primary"></a>
