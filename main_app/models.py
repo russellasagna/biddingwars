@@ -22,7 +22,7 @@ class Post(models.Model):
         return f'{self.title}'
     
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'sell_id': self.id})
+        return reverse('post_detail', kwargs={'post_id': self.id})
 
 class Bid(models.Model):
     name = models.CharField(max_length=50)
