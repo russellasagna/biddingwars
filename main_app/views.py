@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import BidForm, SignUp, CryptoForm
 from .models import Post, Bid, Crypto, Photo
@@ -19,15 +20,17 @@ def some_function(request):
 def home(request):
     return render(request, 'home.html', {})
 
+@login_required
 def user_bids(request):
     my_bids = Post.objects.filter(user=request.user)
     return render(request, 'user_stuff/user_bids.html', {'posts': my_bids})
 
+@login_required
 def post_list(request):
   all_bids = Post.objects.exclude(user=request.user)
   return render(request, 'main_app/post_list.html', {'posts': all_bids})
   
-
+@login_required
 def post_detail(request, post_id):
   post = Post.objects.get(id=post_id)
   buyer_form = BidForm()
@@ -51,7 +54,7 @@ class PostDelete(DeleteView, LoginRequiredMixin):
   model = Post
   success_url = '/bids/userbids'
 
-
+@login_required
 def add_bid(request, post_id):
   form = BidForm(request.POST)
   post = Post.objects.get(id=post_id)
@@ -96,6 +99,7 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+@login_required
 def add_photo(request, post_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
